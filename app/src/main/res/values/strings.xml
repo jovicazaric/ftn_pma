@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WDictionary</string>
+    <string name="enter_word">Enter word...</string>
+    <string name="definitions">Definitions</string>
+    <string name="related_words">Related words</string>
+    <string name="random_word">Random word</string>
+    <string name="search">Search</string>
 </resources>
