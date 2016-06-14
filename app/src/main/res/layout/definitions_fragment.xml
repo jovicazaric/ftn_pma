@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/word_limit_container">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/word_limit"
+                android:id="@+id/tv_word_limit"
+                />
+
+            <Spinner
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/tv_word_limit"
+                android:id="@+id/sp_words_limit"
+                android:layout_alignBaseline="@id/tv_word_limit"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/part_of_speech_container"
+            android:layout_below="@id/word_limit_container">
+
+            <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="@string/part_of_speech"
+            android:id="@+id/tv_part_of_speech"
+                />
+
+            <Spinner
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_part_of_speech"
+                android:id="@+id/sp_part_of_speech"
+                android:layout_alignBaseline="@id/tv_part_of_speech"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/use_canonical"
+            android:layout_below="@id/part_of_speech_container">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/use_canonical"
+                android:id="@+id/tv_use_canonical"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_use_canonical"
+                android:id="@+id/cb_use_canonical"
+                android:layout_marginLeft="95dp"
+                android:layout_alignBaseline="@id/tv_use_canonical"
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -9,60 +9,89 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jovica.wdictionary.SearchActivity">
 
-    <EditText
-        android:id="@+id/et_word_for_search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:inputType="text"
-        android:hint="@string/enter_word" />
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_word_for_search"
-        android:layout_alignLeft="@id/et_word_for_search"
-        android:layout_marginTop="15dp">
+        android:layout_height="match_parent">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg_search_types">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <RadioButton
+            <EditText
+                android:id="@+id/et_word_for_search"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:inputType="text"
+                android:hint="@string/enter_word" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_definitions"
-                android:text="@string/definitions"
-                android:checked="true"
-                android:onClick="onSearchTypeChanged"/>
+                android:layout_below="@id/et_word_for_search"
+                android:layout_alignLeft="@id/et_word_for_search"
+                android:id="@+id/search_container"
+                android:layout_marginTop="15dp">
 
-            <RadioButton
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_search_types">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_definitions"
+                        android:text="@string/definitions"
+                        android:checked="true"
+                        android:onClick="onSearchTypeChanged"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_related_words"
+                        android:text="@string/related_words"
+                        android:onClick="onSearchTypeChanged"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_random_word"
+                        android:text="@string/random_word"
+                        android:onClick="onSearchTypeChanged"/>
+
+                </RadioGroup>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/rg_search_types"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="70dp"
+                    android:text="@string/search"
+                    android:onClick="onSearchButtonClicked"/>
+
+            </RelativeLayout>
+
+            <View
                 android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/search_container"
+                android:id="@+id/horizontal_line"
+                android:layout_marginTop="20dp"
+                android:background="#000000">
+            </View>
+
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/search_options_fragment_container"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_related_words"
-                android:text="@string/related_words"
-                android:onClick="onSearchTypeChanged"/>
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/horizontal_line"
+                android:layout_marginTop="20dp"/>
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rb_random_word"
-                android:text="@string/random_word"
-                android:onClick="onSearchTypeChanged"/>
+        </RelativeLayout>
 
-        </RadioGroup>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/rg_search_types"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="70dp"
-            android:text="@string/search"
-            android:onClick="onSearchButtonClicked"/>
-
-    </RelativeLayout>
-
+    </ScrollView>
 
 </RelativeLayout>
