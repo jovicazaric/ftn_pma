@@ -10,6 +10,9 @@
     <string name="use_canonical">Use canonical</string>
     <string name="relationship_type">Relationship type</string>
     <string name="limit_per_relationship_type">Limit per relationship type</string>
+    <string name="has_dictionary_definition">Has dictionary definition</string>
+    <string name="min_length">Min length</string>
+    <string name="max_length">Max length</string>
     <string-array name="words_limit_spinner_values">
         <item>5</item>
         <item>10</item>
@@ -48,4 +51,7 @@
         <item>Rhyme</item>
         <item>Same context</item>
     </string-array>
+    <integer name="min_word_length">3</integer>
+    <integer name="max_word_length">15</integer>
+    <string name="more_than_max">&gt;15</string>
 </resources>

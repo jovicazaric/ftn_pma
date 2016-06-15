@@ -4,10 +4,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="cccccccccccc"
-        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/has_dictionary_definition_container">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/has_dictionary_definition"
+                android:id="@+id/tv_has_dictionary_definition"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_has_dictionary_definition"
+                android:id="@+id/cb_has_dictionary_definition"
+                android:layout_marginLeft="50dp"
+                android:checked="true"
+                android:layout_alignBaseline="@id/tv_has_dictionary_definition"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/part_of_speech_container"
+            android:layout_below="@id/has_dictionary_definition_container">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/part_of_speech"
+                android:id="@+id/tv_part_of_speech"
+                />
+
+            <Spinner
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_part_of_speech"
+                android:id="@+id/sp_part_of_speech"
+                android:layout_alignBaseline="@id/tv_part_of_speech"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/min_length_container"
+            android:layout_below="@id/part_of_speech_container">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/min_length"
+                android:id="@+id/tv_min_length"
+                />
+
+            <Spinner
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_min_length"
+                android:layout_marginLeft="50dp"
+                android:id="@+id/sp_min_length"
+                android:layout_alignBaseline="@id/tv_min_length"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/max_length"
+            android:layout_below="@id/min_length_container">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/max_length"
+                android:id="@+id/tv_max_length"
+                />
+
+            <Spinner
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_max_length"
+                android:layout_marginLeft="50dp"
+                android:id="@+id/sp_max_length"
+                android:layout_alignBaseline="@id/tv_max_length"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

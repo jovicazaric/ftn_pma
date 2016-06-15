@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import static com.example.jovica.wdictionary.helpers.UI.initPartOfSpeechSpinner;
+
 public class DefinitionsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.definitions_fragment, container, false);
         initWordsLimitSpinner(view);
-        initPartOfSpeechSpinner(view);
+        initPartOfSpeechSpinner(this.getActivity(), view);
         return view;
     }
 
@@ -24,13 +26,4 @@ public class DefinitionsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wordsLimitSpinner.setAdapter(adapter);
     }
-
-    public void initPartOfSpeechSpinner(View view){
-        Spinner partOfSpeechSpinner = (Spinner) view.findViewById(R.id.sp_part_of_speech);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.part_of_speech_values, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        partOfSpeechSpinner.setAdapter(adapter);
-    }
-
-
 }
