@@ -4,9 +4,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="bbbbbbbbbbbbbbb"/>
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/relationship_type_container">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/relationship_type"
+                android:id="@+id/tv_relationship_type"
+                />
+
+            <Spinner
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_relationship_type"
+                android:id="@+id/sp_relationship_type"
+                android:layout_alignBaseline="@id/tv_relationship_type"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/limit_per_relationship_type_container"
+            android:layout_below="@id/relationship_type_container">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/limit_per_relationship_type"
+                android:id="@+id/tv_limit_per_relationship_type"
+                />
+
+            <Spinner
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_limit_per_relationship_type"
+                android:layout_marginLeft="50dp"
+                android:id="@+id/sp_limit_per_relationship_type"
+                android:layout_alignBaseline="@id/tv_limit_per_relationship_type"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/use_canonical"
+            android:layout_below="@id/limit_per_relationship_type_container">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/use_canonical"
+                android:id="@+id/tv_use_canonical"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_use_canonical"
+                android:id="@+id/cb_use_canonical"
+                android:layout_marginLeft="95dp"
+                android:layout_alignBaseline="@id/tv_use_canonical"
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

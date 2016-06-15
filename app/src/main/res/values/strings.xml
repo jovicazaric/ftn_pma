@@ -8,6 +8,8 @@
     <string name="word_limit">Words limit</string>
     <string name="part_of_speech">Part of speech</string>
     <string name="use_canonical">Use canonical</string>
+    <string name="relationship_type">Relationship type</string>
+    <string name="limit_per_relationship_type">Limit per relationship type</string>
     <string-array name="words_limit_spinner_values">
         <item>5</item>
         <item>10</item>
@@ -30,5 +32,20 @@
         <item>Adverb</item>
         <item>Abbreviation</item>
     </string-array>
-    <string name="select_words_limit_no">Select words limit number</string>
+    <string-array name="relationship_type_keys">
+        <item>synonym</item>
+        <item>antonym</item>
+        <item>variant</item>
+        <item>equivalent</item>
+        <item>rhyme</item>
+        <item>same-context</item>
+    </string-array>
+    <string-array name="relationship_type_values">
+        <item>Synonym</item>
+        <item>Antonym</item>
+        <item>Variant</item>
+        <item>Equivalent</item>
+        <item>Rhyme</item>
+        <item>Same context</item>
+    </string-array>
 </resources>
