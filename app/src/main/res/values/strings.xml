@@ -21,6 +21,7 @@
         <item>50</item>
     </string-array>
     <string-array name="part_of_speech_keys">
+        <item>all</item>
         <item>noun</item>
         <item>verb</item>
         <item>adjective</item>
@@ -54,4 +55,5 @@
     <integer name="min_word_length">3</integer>
     <integer name="max_word_length">15</integer>
     <string name="more_than_max">&gt;15</string>
+    <string name="search_word_required">Please enter word for search</string>
 </resources>

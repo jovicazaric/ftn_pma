@@ -14,8 +14,8 @@ import static com.example.jovica.wdictionary.helpers.UI.initPartOfSpeechSpinner;
 
 public class RandomWordFragment extends Fragment {
 
-    String[] min_values = null;
-    String[] max_values = null;
+    String[] minValues = null;
+    String[] maxValues = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,54 +26,54 @@ public class RandomWordFragment extends Fragment {
     }
 
     public void initMinMaxLengthSpinners(View view) {
-        int min_length = getResources().getInteger(R.integer.min_word_length);
-        final int max_length = getResources().getInteger(R.integer.max_word_length);
-        String more_than_max = getResources().getString(R.string.more_than_max);
-        min_values = new String[max_length-min_length + 1];
-        max_values = new String[max_length-min_length + 2];
+        int minLength = getResources().getInteger(R.integer.min_word_length);
+        final int maxLength = getResources().getInteger(R.integer.max_word_length);
+        String moreThanMax = getResources().getString(R.string.more_than_max);
+        minValues = new String[maxLength-minLength + 1];
+        maxValues = new String[maxLength-minLength + 2];
 
-        for (int i = min_length; i <= max_length; i++) {
-            min_values[i-min_length] = i + "";
-            max_values[i-min_length] = i + "";
+        for (int i = minLength; i <= maxLength; i++) {
+            minValues[i-minLength] = i + "";
+            maxValues[i-minLength] = i + "";
         }
 
-        max_values[max_values.length - 1] = more_than_max;
+        maxValues[maxValues.length - 1] = moreThanMax;
 
-        Spinner min_length_spinner = (Spinner) view.findViewById(R.id.sp_min_length);
-        ArrayAdapter<String> min_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, min_values);
-        min_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        min_length_spinner.setAdapter(min_adapter);
-        min_length_spinner.setSelection(0);
+        Spinner minLengthSpinner = (Spinner) view.findViewById(R.id.sp_min_length);
+        ArrayAdapter<String> minAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, minValues);
+        minAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        minLengthSpinner.setAdapter(minAdapter);
+        minLengthSpinner.setSelection(0);
 
-        min_length_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        minLengthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String[] new_max_values = new String[max_values.length - position];
+                String[] newMaxValues = new String[maxValues.length - position];
 
-                for (int i = position; i < max_values.length; i++) {
-                    new_max_values[i - position] = max_values[i];
+                for (int i = position; i < maxValues.length; i++) {
+                    newMaxValues[i - position] = maxValues[i];
                 }
 
-                Spinner max_length_spinner = (Spinner) view.getRootView().findViewById(R.id.sp_max_length);
-                String max_value_selected = (String) max_length_spinner.getSelectedItem();
+                Spinner maxLengthSpinner = (Spinner) view.getRootView().findViewById(R.id.sp_max_length);
+                String maxValueSelected = (String) maxLengthSpinner.getSelectedItem();
 
-                ArrayAdapter<String> max_adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, new_max_values);
-                max_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                max_length_spinner.setAdapter(max_adapter);
+                ArrayAdapter<String> maxAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, newMaxValues);
+                maxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                maxLengthSpinner.setAdapter(maxAdapter);
 
 
                 boolean selected = false;
-                for (int i = 0; i < new_max_values.length; i++) {
-                    if (new_max_values[i] == max_value_selected) {
-                        max_length_spinner.setSelection(i);
+                for (int i = 0; i < newMaxValues.length; i++) {
+                    if (newMaxValues[i] == maxValueSelected) {
+                        maxLengthSpinner.setSelection(i);
                         selected = true;
                         break;
                     }
                 }
 
                 if (!selected) {
-                    max_length_spinner.setSelection(0);
+                    maxLengthSpinner.setSelection(0);
                 }
             }
 
@@ -83,11 +83,11 @@ public class RandomWordFragment extends Fragment {
         });
 
 
-        Spinner max_length_spinner = (Spinner) view.findViewById(R.id.sp_max_length);
-        ArrayAdapter<String> max_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, max_values);
-        max_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        max_length_spinner.setAdapter(max_adapter);
-        max_length_spinner.setSelection(max_values.length - 2);
+        Spinner maxLengthSpinner = (Spinner) view.findViewById(R.id.sp_max_length);
+        ArrayAdapter<String> maxAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, maxValues);
+        maxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        maxLengthSpinner.setAdapter(maxAdapter);
+        maxLengthSpinner.setSelection(maxValues.length - 2);
 
     }
 }
