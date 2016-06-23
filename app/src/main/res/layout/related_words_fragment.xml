@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:id="@+id/use_canonical"
+            android:id="@+id/use_canonical_container"
             android:layout_below="@id/limit_per_relationship_type_container">
 
             <TextView

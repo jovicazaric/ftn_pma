@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
+
+import com.example.jovica.wdictionary.model.RelatedWordsSearch;
 
 public class RelatedWordsFragment extends Fragment {
 
@@ -30,5 +33,22 @@ public class RelatedWordsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.relationship_type_values, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         relationship_type.setAdapter(adapter);
+    }
+
+    public RelatedWordsSearch getSearchParams() {
+        RelatedWordsSearch relatedWordsSearch = new RelatedWordsSearch();
+
+        Spinner relationshipTypeSpinner = (Spinner) getActivity().findViewById(R.id.sp_relationship_type);
+        int selectedItemPosition = relationshipTypeSpinner.getSelectedItemPosition();
+        String[] relationshipTypes = getResources().getStringArray(R.array.relationship_type_keys);
+        relatedWordsSearch.setRelationshipType(relationshipTypes[selectedItemPosition]);
+
+        Spinner limitPerTypeSpinner = (Spinner) getActivity().findViewById(R.id.sp_limit_per_relationship_type);
+        relatedWordsSearch.setLimitPerRelationshipType(Integer.parseInt((String) limitPerTypeSpinner.getSelectedItem()));
+
+        CheckBox useCanonicalCheckbox = (CheckBox) getActivity().findViewById(R.id.cb_use_canonical);
+        relatedWordsSearch.setUseCanonical(useCanonicalCheckbox.isChecked());
+
+        return relatedWordsSearch;
     }
 }

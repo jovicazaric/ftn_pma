@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
+
+import com.example.jovica.wdictionary.model.RandomWordSearch;
 
 import static com.example.jovica.wdictionary.helpers.UI.initPartOfSpeechSpinner;
 
@@ -81,13 +84,38 @@ public class RandomWordFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-
+        
         Spinner maxLengthSpinner = (Spinner) view.findViewById(R.id.sp_max_length);
         ArrayAdapter<String> maxAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, maxValues);
         maxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         maxLengthSpinner.setAdapter(maxAdapter);
         maxLengthSpinner.setSelection(maxValues.length - 2);
+    }
 
+    public RandomWordSearch getSearchParams() {
+        RandomWordSearch randomWordSearch = new RandomWordSearch();
+
+        CheckBox hasDictionaryDefinitionCheckBox = (CheckBox) getActivity().findViewById(R.id.cb_has_dictionary_definition);
+        randomWordSearch.setHasDictionaryDefinition(hasDictionaryDefinitionCheckBox.isChecked());
+
+        Spinner partOfSpeechSpinner = (Spinner) getActivity().findViewById(R.id.sp_part_of_speech);
+        int partOfSpeechPosition = partOfSpeechSpinner.getSelectedItemPosition();
+        String[] partOfSpeechKeys = getResources().getStringArray(R.array.part_of_speech_keys);
+        randomWordSearch.setPartOfSpeech(partOfSpeechKeys[partOfSpeechPosition]);
+
+        Spinner minLengthSpinner = (Spinner) getActivity().findViewById(R.id.sp_min_length);
+        randomWordSearch.setMinLength(Integer.parseInt((String) minLengthSpinner.getSelectedItem()));
+
+        Spinner maxLengthSpinner = (Spinner) getActivity().findViewById(R.id.sp_max_length);
+        String moreThanMax = getResources().getString(R.string.more_than_max);
+        String selectedItem = (String) maxLengthSpinner.getSelectedItem();
+
+        if (selectedItem == moreThanMax) {
+            randomWordSearch.setMaxLength(-1);
+        } else {
+            randomWordSearch.setMaxLength(Integer.parseInt(selectedItem));
+        }
+
+        return randomWordSearch;
     }
 }

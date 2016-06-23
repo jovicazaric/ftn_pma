@@ -14,6 +14,8 @@
     <string name="min_length">Min length</string>
     <string name="max_length">Max length</string>
     <string-array name="words_limit_spinner_values">
+        <item>1</item>
+        <item>3</item>
         <item>5</item>
         <item>10</item>
         <item>20</item>
@@ -21,7 +23,7 @@
         <item>50</item>
     </string-array>
     <string-array name="part_of_speech_keys">
-        <item>all</item>
+        <item></item>
         <item>noun</item>
         <item>verb</item>
         <item>adjective</item>
@@ -37,6 +39,7 @@
         <item>Abbreviation</item>
     </string-array>
     <string-array name="relationship_type_keys">
+        <item></item>
         <item>synonym</item>
         <item>antonym</item>
         <item>variant</item>
@@ -45,6 +48,7 @@
         <item>same-context</item>
     </string-array>
     <string-array name="relationship_type_values">
+        <item>All</item>
         <item>Synonym</item>
         <item>Antonym</item>
         <item>Variant</item>
