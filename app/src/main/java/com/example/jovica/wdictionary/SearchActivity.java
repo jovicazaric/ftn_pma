@@ -3,13 +3,13 @@ package com.example.jovica.wdictionary;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.jovica.wdictionary.helpers.DictionaryAPI;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
 import com.example.jovica.wdictionary.model.RelatedWordsSearch;
@@ -35,7 +35,11 @@ public class SearchActivity extends FragmentActivity {
     public void onSearchButtonClicked(View view) {
         Search search = getSearch();
         if (search != null) {
-            Log.d(activityName, search.toString());
+           if (search instanceof  DefinitionsSearch) {
+               DictionaryAPI.getDefinitions((DefinitionsSearch)search);
+           } else if (search instanceof RandomWordSearch) {
+               DictionaryAPI.getRandomWord((RandomWordSearch)search);
+           }
         }
     }
 
