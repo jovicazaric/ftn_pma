@@ -22,6 +22,7 @@
     <string name="definitions_search_progress_dialog_content">Getting definitions.</string>
     <string name="definitions_not_found">Definitions not found for typed word. Check if the word is type correctly.</string>
     <string name="server_error">Error happened while requesting data from server. Please try again.</string>
+    <string name="random_word_search_progress_dialog_content">Getting random word.</string>
     <string-array name="words_limit_spinner_values">
         <item>1</item>
         <item>3</item>

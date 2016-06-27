@@ -18,6 +18,7 @@ import android.widget.Toolbar;
 import com.example.jovica.wdictionary.helpers.DictionaryAPI;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
+import com.example.jovica.wdictionary.model.RandomWordResult;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
 import com.example.jovica.wdictionary.model.RelatedWordsSearch;
 import com.example.jovica.wdictionary.model.ResultStatus;
@@ -62,7 +63,7 @@ public class SearchActivity extends FragmentActivity {
             if (search instanceof DefinitionsSearch) {
                 new GetDefinitions().execute((DefinitionsSearch) search);
             } else if (search instanceof RandomWordSearch) {
-                DictionaryAPI.getRandomWord((RandomWordSearch) search);
+                new GetRandomWord().execute((RandomWordSearch) search);
             }
         }
     }
@@ -184,7 +185,48 @@ public class SearchActivity extends FragmentActivity {
         }
     }
 
+    private class GetRandomWord extends AsyncTask<RandomWordSearch, Void, RandomWordResult> {
+
+        private RandomWordSearch randomWordSearch;
+
+        @Override
+        protected  void onPreExecute() {
+            progressDialog = ProgressDialog.show(SearchActivity.this, getResources().getString(R.string.progress_dialog_title),
+                    getResources().getString(R.string.random_word_search_progress_dialog_content));
+        }
+
+        @Override
+        protected RandomWordResult doInBackground(RandomWordSearch... params) {
+            RandomWordSearch search = params[0];
+            randomWordSearch = search;
+            RandomWordResult result = DictionaryAPI.getRandomWord(search);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(RandomWordResult result) {
+            progressDialog.dismiss();
+            Log.d(activityName, result.toString());
+
+            if (result.getResultStatus() == ResultStatus.Ok) {
+                DefinitionsSearch definitionsSearch = makeDefinitionsSearch(randomWordSearch, result);
+                new GetDefinitions().execute(definitionsSearch);
+            } else {
+                showToastMessage(getResources().getString(R.string.server_error));
+            }
+        }
+    }
+
     private void showToastMessage(String message) {
         Toast.makeText(SearchActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private DefinitionsSearch makeDefinitionsSearch(RandomWordSearch randomWordSearch, RandomWordResult randomWordResult) {
+        DefinitionsSearch definitionsSearch = new DefinitionsSearch();
+        definitionsSearch.setWord(randomWordResult.getWord());
+        definitionsSearch.setUseCanonical(false);
+        definitionsSearch.setPartOfSpeech(randomWordSearch.getPartOfSpeech());
+        definitionsSearch.setWordLimit(10);
+        return definitionsSearch;
     }
 }

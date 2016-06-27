@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
+import com.example.jovica.wdictionary.model.RandomWordResult;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
 import com.example.jovica.wdictionary.model.ResultStatus;
 import com.example.jovica.wdictionary.model.WordDefinition;
@@ -82,7 +83,7 @@ public class DictionaryAPI {
         return result;
     }
 
-    public static void getRandomWord(RandomWordSearch randomWordSearch) {
+    public static RandomWordResult getRandomWord(RandomWordSearch randomWordSearch) {
         String url = "words.json/randomWord";
         RequestParams params = new RequestParams();
         params.put("hasDictionaryDef", randomWordSearch.getHasDictionaryDefinition());
@@ -94,26 +95,33 @@ public class DictionaryAPI {
         params.put("minLength", randomWordSearch.getMinLength());
         params.put("maxLength", randomWordSearch.getMaxLength());
 
+        final RandomWordResult result = new RandomWordResult();
         get(url, params, new JsonHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    JSONObject def = (JSONObject) response;
-                    Log.d("DICTIONARYAPI", def.toString());
+
+                JSONObject def = (JSONObject) response;
+                Log.d("DICTIONARYAPI", def.toString());
+
+                Gson gson = new Gson();
+                RandomWordResult tempResult = gson.fromJson(response.toString(), RandomWordResult.class);
+                result.setWord(tempResult.getWord());
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DICTIONARYAPI", errorResponse.toString());
+                result.setResultStatus(ResultStatus.ServerError);
+            }
 
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject def = (JSONObject) response.get(i);
-                        Log.d("DICTIONARYAPI", def.toString());
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("DICTIONARYAPI", responseString);
+                result.setResultStatus(ResultStatus.ServerError);
             }
         });
+
+        return result;
     }
 }
