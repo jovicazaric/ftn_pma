@@ -18,6 +18,10 @@
     <string name="menu_about">About</string>
     <string name="menu_exit">Exit</string>
     <string name="toolbar_definitions_for">Definitions for:</string>
+    <string name="progress_dialog_title">Please wait</string>
+    <string name="definitions_search_progress_dialog_content">Getting definitions.</string>
+    <string name="definitions_not_found">Definitions not found for typed word. Check if the word is type correctly.</string>
+    <string name="server_error">Error happened while requesting data from server. Please try again.</string>
     <string-array name="words_limit_spinner_values">
         <item>1</item>
         <item>3</item>
@@ -64,5 +68,5 @@
     <integer name="min_word_length">3</integer>
     <integer name="max_word_length">15</integer>
     <string name="more_than_max">&gt;15</string>
-    <string name="search_word_required">Please enter word for search</string>
+    <string name="search_word_required">Please enter word for search.</string>
 </resources>

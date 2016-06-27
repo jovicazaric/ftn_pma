@@ -20,6 +20,7 @@ import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
 import com.example.jovica.wdictionary.model.RelatedWordsSearch;
+import com.example.jovica.wdictionary.model.ResultStatus;
 import com.example.jovica.wdictionary.model.Search;
 import com.example.jovica.wdictionary.model.WordDefinition;
 
@@ -29,7 +30,7 @@ public class SearchActivity extends FragmentActivity {
 
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
-
+    private EditText wordForSearchEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,8 @@ public class SearchActivity extends FragmentActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
         getActionBar().setTitle(getResources().getString(R.string.app_name));
+
+        wordForSearchEditText = (EditText) findViewById(R.id.et_word_for_search);
     }
 
     @Override
@@ -74,19 +77,21 @@ public class SearchActivity extends FragmentActivity {
                 if (checked) {
                     DefinitionsFragment definitionsFragment = new DefinitionsFragment();
                     transaction.replace(R.id.search_options_fragment_container, definitionsFragment);
+                    wordForSearchEditText.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.rb_related_words:
                 if (checked) {
                     RelatedWordsFragment relatedWordsFragment = new RelatedWordsFragment();
                     transaction.replace(R.id.search_options_fragment_container, relatedWordsFragment);
+                    wordForSearchEditText.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.rb_random_word:
                 if (checked) {
                     RandomWordFragment randomWordFragment = new RandomWordFragment();
                     transaction.replace(R.id.search_options_fragment_container, randomWordFragment);
-                    ;
+                    wordForSearchEditText.setVisibility(View.INVISIBLE);
                 }
                 break;
         }
@@ -97,7 +102,6 @@ public class SearchActivity extends FragmentActivity {
     public Search getSearch() {
 
         Search search = null;
-        EditText wordForSearchEditText = null;
         RadioGroup SearchTypesRadioGroup = (RadioGroup) findViewById(R.id.rg_search_types);
 
         switch (SearchTypesRadioGroup.getCheckedRadioButtonId()) {
@@ -107,7 +111,6 @@ public class SearchActivity extends FragmentActivity {
                     DefinitionsFragment definitionsFragment = (DefinitionsFragment) getSupportFragmentManager().findFragmentById(R.id.search_options_fragment_container);
                     DefinitionsSearch definitionsSearch = definitionsFragment.getSearchParams();
 
-                    wordForSearchEditText = (EditText) findViewById(R.id.et_word_for_search);
                     definitionsSearch.setWord(wordForSearchEditText.getText().toString());
                     search = definitionsSearch;
                 }
@@ -119,7 +122,6 @@ public class SearchActivity extends FragmentActivity {
                     RelatedWordsFragment relatedWordsFragment = (RelatedWordsFragment) getSupportFragmentManager().findFragmentById(R.id.search_options_fragment_container);
                     RelatedWordsSearch relatedWordsSearch = relatedWordsFragment.getSearchParams();
 
-                    wordForSearchEditText = (EditText) findViewById(R.id.et_word_for_search);
                     relatedWordsSearch.setWord(wordForSearchEditText.getText().toString());
                     search = relatedWordsSearch;
                 }
@@ -136,45 +138,53 @@ public class SearchActivity extends FragmentActivity {
     }
 
     public boolean isWordForSearchValid() {
-        EditText wordForSearchEditText = (EditText) findViewById(R.id.et_word_for_search);
 
         if (wordForSearchEditText.getText().toString().equals("")) {
             String errorMessage = getResources().getString(R.string.search_word_required);
-            Toast.makeText(SearchActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+            showToastMessage(errorMessage);
             return false;
         }
 
         return true;
     }
 
-        private class GetDefinitions extends AsyncTask<DefinitionsSearch, Void, DefinitionsResult> {
+    private class GetDefinitions extends AsyncTask<DefinitionsSearch, Void, DefinitionsResult> {
 
-            @Override
-            protected  void onPreExecute() {
-                progressDialog = ProgressDialog.show(SearchActivity.this, "Please wait", "Getting definitions");
+        @Override
+        protected  void onPreExecute() {
+            progressDialog = ProgressDialog.show(SearchActivity.this, getResources().getString(R.string.progress_dialog_title),
+                    getResources().getString(R.string.definitions_search_progress_dialog_content));
+        }
+
+        @Override
+        protected DefinitionsResult doInBackground(DefinitionsSearch... params) {
+            DefinitionsSearch search = params[0];
+            DefinitionsResult result = DictionaryAPI.getDefinitions(search);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(DefinitionsResult result) {
+            progressDialog.dismiss();
+
+            Log.d(activityName, result.getResultStatus() + ", " + result.getDefinitions().size());
+            for (WordDefinition w : result.getDefinitions()) {
+                Log.d(activityName, w.toString());
             }
 
-            @Override
-            protected DefinitionsResult doInBackground(DefinitionsSearch... params) {
-                DefinitionsSearch search = params[0];
-                DefinitionsResult result = DictionaryAPI.getDefinitions(search);
-                return result;
-            }
-
-            @Override
-            protected void onPostExecute(DefinitionsResult result) {
-                progressDialog.dismiss();
-
-                Log.d(activityName, result.getResultStatus() + ", " + result.getDefinitions().size());
-                for (WordDefinition w : result.getDefinitions()) {
-                    Log.d(activityName, w.toString());
-                }
-
+            if (result.getResultStatus() == ResultStatus.Ok && result.getDefinitions().size() > 0) {
                 Intent intent = new Intent(SearchActivity.this, DefinitionsActivity.class);
                 intent.putExtra("definitions", result);
                 startActivity(intent);
-
+            } else if (result.getResultStatus() == ResultStatus.Ok && result.getDefinitions().size() == 0) {
+                showToastMessage(getResources().getString(R.string.definitions_not_found));
+            } else if (result.getResultStatus() == ResultStatus.ServerError || result.getResultStatus() == ResultStatus.BadData) {
+                showToastMessage(getResources().getString(R.string.server_error));
             }
+        }
+    }
 
+    private void showToastMessage(String message) {
+        Toast.makeText(SearchActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }
