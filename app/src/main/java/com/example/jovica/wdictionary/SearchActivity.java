@@ -1,6 +1,7 @@
 package com.example.jovica.wdictionary;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,10 +16,12 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.jovica.wdictionary.helpers.DictionaryAPI;
+import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
 import com.example.jovica.wdictionary.model.RelatedWordsSearch;
 import com.example.jovica.wdictionary.model.Search;
+import com.example.jovica.wdictionary.model.WordDefinition;
 
 public class SearchActivity extends FragmentActivity {
 
@@ -54,7 +57,6 @@ public class SearchActivity extends FragmentActivity {
         Search search = getSearch();
         if (search != null) {
             if (search instanceof DefinitionsSearch) {
-                //DictionaryAPI.getDefinitions((DefinitionsSearch) search);
                 new GetDefinitions().execute((DefinitionsSearch) search);
             } else if (search instanceof RandomWordSearch) {
                 DictionaryAPI.getRandomWord((RandomWordSearch) search);
@@ -145,27 +147,34 @@ public class SearchActivity extends FragmentActivity {
         return true;
     }
 
-    private class GetDefinitions extends AsyncTask<DefinitionsSearch, Void, String> {
+        private class GetDefinitions extends AsyncTask<DefinitionsSearch, Void, DefinitionsResult> {
 
-        @Override
-        protected  void onPreExecute() {
-            progressDialog = ProgressDialog.show(SearchActivity.this, "Please wait", "Getting definitions");
-        }
+            @Override
+            protected  void onPreExecute() {
+                progressDialog = ProgressDialog.show(SearchActivity.this, "Please wait", "Getting definitions");
+            }
 
-        @Override
-        protected String doInBackground(DefinitionsSearch... params) {
-            DefinitionsSearch search = params[0];
-            DictionaryAPI.getDefinitions(search);
+            @Override
+            protected DefinitionsResult doInBackground(DefinitionsSearch... params) {
+                DefinitionsSearch search = params[0];
+                DefinitionsResult result = DictionaryAPI.getDefinitions(search);
+                return result;
+            }
 
-            return "done";
-        }
+            @Override
+            protected void onPostExecute(DefinitionsResult result) {
+                progressDialog.dismiss();
 
-        @Override
-        protected void onPostExecute(String result) {
-            Log.d(activityName, result.toUpperCase());
-            progressDialog.dismiss();
-            super.onPostExecute(result);
-        }
+                Log.d(activityName, result.getResultStatus() + ", " + result.getDefinitions().size());
+                for (WordDefinition w : result.getDefinitions()) {
+                    Log.d(activityName, w.toString());
+                }
+
+                Intent intent = new Intent(SearchActivity.this, DefinitionsActivity.class);
+                intent.putExtra("definitions", result);
+                startActivity(intent);
+
+            }
 
     }
 }
