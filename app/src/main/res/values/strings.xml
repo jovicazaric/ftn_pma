@@ -13,6 +13,10 @@
     <string name="has_dictionary_definition">Has dictionary definition</string>
     <string name="min_length">Min length</string>
     <string name="max_length">Max length</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_about">About</string>
+    <string name="menu_exit">Exit</string>
     <string-array name="words_limit_spinner_values">
         <item>1</item>
         <item>3</item>

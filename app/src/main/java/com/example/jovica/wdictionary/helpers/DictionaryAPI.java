@@ -4,10 +4,10 @@ import android.util.Log;
 
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +21,7 @@ public class DictionaryAPI {
     public static final String api_key = "f7a0b965ab8d6d61d700608bb8202da8a818e42379cf27cc4";
     private static final String BASE_URL = "http://api.wordnik.com:80/v4/";
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    private static SyncHttpClient client = new SyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         params.put("api_key", api_key);
@@ -30,7 +30,6 @@ public class DictionaryAPI {
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }
-
 
     public static void getDefinitions(DefinitionsSearch definitionsSearch) {
         String url = "word.json/" + definitionsSearch.getWord() + "/definitions";
@@ -51,7 +50,6 @@ public class DictionaryAPI {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject def = (JSONObject) response.get(i);
