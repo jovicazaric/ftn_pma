@@ -21,6 +21,7 @@ public class DefinitionAdapter extends ArrayAdapter<WordDefinition> {
     private int resource;
     private String[] partOfSpeechKeys;
     private String[] partOfSpeechValues;
+
     public DefinitionAdapter(Context context, int resource, List<WordDefinition> objects) {
         super(context, resource, objects);
         this.resource = resource;

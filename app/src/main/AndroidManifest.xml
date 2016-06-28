@@ -17,6 +17,9 @@
 
         <activity android:name=".DefinitionsActivity">
         </activity>
+
+        <activity android:name=".RelatedWordsActivity">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

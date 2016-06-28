@@ -6,9 +6,13 @@ import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordResult;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
+import com.example.jovica.wdictionary.model.RelatedWordsResult;
+import com.example.jovica.wdictionary.model.RelatedWordsSearch;
+import com.example.jovica.wdictionary.model.RelationshipTypeResult;
 import com.example.jovica.wdictionary.model.ResultStatus;
 import com.example.jovica.wdictionary.model.WordDefinition;
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -62,7 +66,7 @@ public class DictionaryAPI {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         definitions.add(gson.fromJson(response.get(i).toString(), WordDefinition.class));
-                    } catch (JSONException e) {
+                    } catch (JSONException | JsonParseException e) {
                         result.setResultStatus(ResultStatus.BadData);
                         e.printStackTrace();
                         break;
@@ -86,7 +90,10 @@ public class DictionaryAPI {
     public static RandomWordResult getRandomWord(RandomWordSearch randomWordSearch) {
         String url = "words.json/randomWord";
         RequestParams params = new RequestParams();
-        params.put("hasDictionaryDef", randomWordSearch.getHasDictionaryDefinition());
+
+        if (randomWordSearch.getHasDictionaryDefinition()) {
+            params.put("hasDictionaryDef", randomWordSearch.getHasDictionaryDefinition());
+        }
 
         if (!randomWordSearch.getPartOfSpeech().equals("")) {
             params.put("includePartOfSpeech", randomWordSearch.getPartOfSpeech());
@@ -101,27 +108,78 @@ public class DictionaryAPI {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                JSONObject def = (JSONObject) response;
-                Log.d("DICTIONARYAPI", def.toString());
-
                 Gson gson = new Gson();
-                RandomWordResult tempResult = gson.fromJson(response.toString(), RandomWordResult.class);
-                result.setWord(tempResult.getWord());
+                try {
+                    RandomWordResult tempResult = gson.fromJson(response.toString(), RandomWordResult.class);
+                    result.setWord(tempResult.getWord());
+                } catch (JsonParseException e) {
+                    result.setResultStatus(ResultStatus.BadData);
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DICTIONARYAPI", errorResponse.toString());
                 result.setResultStatus(ResultStatus.ServerError);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("DICTIONARYAPI", responseString);
                 result.setResultStatus(ResultStatus.ServerError);
             }
         });
 
         return result;
+    }
+
+    public static RelatedWordsResult getRelatedWords(RelatedWordsSearch relatedWordsSearch) {
+        String url = "word.json/" + relatedWordsSearch.getWord() + "/relatedWords";
+        RequestParams params = new RequestParams();
+
+        if (!relatedWordsSearch.getRelationshipType().equals("")) {
+            params.put("relationshipTypes", relatedWordsSearch.getRelationshipType());
+        }
+
+        params.put("limitPerRelationshipType", relatedWordsSearch.getLimitPerRelationshipType());
+        params.put("useCanonical", relatedWordsSearch.getUseCanonical());
+
+        Log.d("DICTIONARYAPI", relatedWordsSearch.toString());
+
+        final RelatedWordsResult result = new RelatedWordsResult();
+        result.setWord(relatedWordsSearch.getWord());
+
+        get(url, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+                Gson gson = new Gson();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject obj = (JSONObject) response.get(i);
+                        Log.d("DICTAPI", obj.toString());
+                        RelationshipTypeResult relationshipTypeResult = gson.fromJson(obj.toString(), RelationshipTypeResult.class);
+                        result.addRelationshipType(relationshipTypeResult);
+                    } catch (JSONException | JsonParseException e) {
+                        result.setResultStatus(ResultStatus.BadData);
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DICTIONARYAPI", "FAILURE");
+                result.setResultStatus(ResultStatus.ServerError);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("DICTIONARYAPI", "FAILURE");
+                result.setResultStatus(ResultStatus.ServerError);
+            }
+        });
+
+        return result;
+
     }
 }

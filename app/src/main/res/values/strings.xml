@@ -18,11 +18,14 @@
     <string name="menu_about">About</string>
     <string name="menu_exit">Exit</string>
     <string name="toolbar_definitions_for">Definitions for:</string>
+    <string name="toolbar_related_words_for">Related words for:</string>
     <string name="progress_dialog_title">Please wait</string>
     <string name="definitions_search_progress_dialog_content">Getting definitions.</string>
-    <string name="definitions_not_found">Definitions not found for typed word. Check if the word is type correctly.</string>
+    <string name="definitions_not_found">Definitions not found for typed word. Check if the word is typed correctly.</string>
     <string name="server_error">Error happened while requesting data from server. Please try again.</string>
     <string name="random_word_search_progress_dialog_content">Getting random word.</string>
+    <string name="related_words_search_progress_dialog_content">Getting related words.</string>
+    <string name="related_words_not_found">Related words not found for typed word. Check if the word is typed correctly</string>
     <string-array name="words_limit_spinner_values">
         <item>1</item>
         <item>3</item>
@@ -66,6 +69,7 @@
         <item>Rhyme</item>
         <item>Same context</item>
     </string-array>
+    <integer name="default_limit_for_random_word">10</integer>
     <integer name="min_word_length">3</integer>
     <integer name="max_word_length">15</integer>
     <string name="more_than_max">&gt;15</string>

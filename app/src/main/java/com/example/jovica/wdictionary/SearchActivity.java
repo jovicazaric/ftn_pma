@@ -20,6 +20,7 @@ import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordResult;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
+import com.example.jovica.wdictionary.model.RelatedWordsResult;
 import com.example.jovica.wdictionary.model.RelatedWordsSearch;
 import com.example.jovica.wdictionary.model.ResultStatus;
 import com.example.jovica.wdictionary.model.Search;
@@ -64,6 +65,8 @@ public class SearchActivity extends FragmentActivity {
                 new GetDefinitions().execute((DefinitionsSearch) search);
             } else if (search instanceof RandomWordSearch) {
                 new GetRandomWord().execute((RandomWordSearch) search);
+            } else if (search instanceof RelatedWordsSearch) {
+                new GetRelatedWords().execute((RelatedWordsSearch) search);
             }
         }
     }
@@ -217,6 +220,42 @@ public class SearchActivity extends FragmentActivity {
         }
     }
 
+    private class GetRelatedWords extends AsyncTask<RelatedWordsSearch, Void, RelatedWordsResult> {
+
+        @Override
+        protected  void onPreExecute() {
+            progressDialog = ProgressDialog.show(SearchActivity.this, getResources().getString(R.string.progress_dialog_title),
+                    getResources().getString(R.string.related_words_search_progress_dialog_content));
+        }
+
+        @Override
+        protected RelatedWordsResult doInBackground(RelatedWordsSearch... params) {
+            RelatedWordsSearch search = params[0];
+            RelatedWordsResult result = DictionaryAPI.getRelatedWords(search);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(RelatedWordsResult result) {
+            progressDialog.dismiss();
+
+            if (result.getResultStatus() == ResultStatus.Ok && result.getRelationshipTypes().size() > 0) {
+
+                Log.d(activityName, result.toString());
+                Log.d(activityName, "OK");
+
+                Intent intent = new Intent(SearchActivity.this, RelatedWordsActivity.class);
+                intent.putExtra("relatedWords", result);
+                startActivity(intent);
+
+            } else if (result.getResultStatus() == ResultStatus.Ok && result.getRelationshipTypes().size() == 0) {
+                showToastMessage(getResources().getString(R.string.related_words_not_found));
+            } else {
+                showToastMessage(getResources().getString(R.string.server_error));
+            }
+        }
+    }
+
     private void showToastMessage(String message) {
         Toast.makeText(SearchActivity.this, message, Toast.LENGTH_LONG).show();
     }
@@ -226,7 +265,7 @@ public class SearchActivity extends FragmentActivity {
         definitionsSearch.setWord(randomWordResult.getWord());
         definitionsSearch.setUseCanonical(false);
         definitionsSearch.setPartOfSpeech(randomWordSearch.getPartOfSpeech());
-        definitionsSearch.setWordLimit(10);
+        definitionsSearch.setWordLimit(getResources().getInteger(R.integer.default_limit_for_random_word));
         return definitionsSearch;
     }
 }
