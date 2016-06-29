@@ -57,8 +57,18 @@
         <item>antonym</item>
         <item>variant</item>
         <item>equivalent</item>
+        <item>cross-reference</item>
+        <item>related-word</item>
         <item>rhyme</item>
+        <item>form</item>
+        <item>etymologically-related-word</item>
+        <item>hypernym</item>
+        <item>hyponym></item>
+        <item>inflected-word</item>
+        <item>primary</item>
         <item>same-context</item>
+        <item>verb-form</item>
+        <item>verb-stern</item>
     </string-array>
     <string-array name="relationship_type_values">
         <item>All</item>
@@ -66,12 +76,23 @@
         <item>Antonym</item>
         <item>Variant</item>
         <item>Equivalent</item>
+        <item>Cross reference</item>
+        <item>Related word</item>
         <item>Rhyme</item>
+        <item>Form</item>
+        <item>Etymologically related word</item>
+        <item>Hypernym</item>
+        <item>Hyponym</item>
+        <item>Inflacted word</item>
+        <item>Primary</item>
         <item>Same context</item>
+        <item>Verb form</item>
+        <item>Verb stern</item>
     </string-array>
     <integer name="default_limit_for_random_word">10</integer>
     <integer name="min_word_length">3</integer>
     <integer name="max_word_length">15</integer>
     <string name="more_than_max">&gt;15</string>
     <string name="search_word_required">Please enter word for search.</string>
+    <integer name="related_word_height">220</integer>
 </resources>

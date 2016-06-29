@@ -26,6 +26,7 @@ public class RelatedWordsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.words_limit_spinner_values, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         limit_per_relationship.setAdapter(adapter);
+        limit_per_relationship.setSelection(4);
     }
 
     public void initRelationshipTypeSpinner(View view){

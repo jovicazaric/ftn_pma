@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.jovica.wdictionary.adapters.RelatedWordsTypesAdapter;
@@ -44,5 +46,9 @@ public class RelatedWordsActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onSearchClick(View v) {
+        Toast.makeText(RelatedWordsActivity.this, (String)v.getTag(), Toast.LENGTH_LONG).show();
     }
 }

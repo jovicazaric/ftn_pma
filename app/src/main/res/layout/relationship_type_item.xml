@@ -8,7 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/relationship_type"
-        android:textSize="@dimen/definition_text_size"
-        />
+        android:textSize="@dimen/relationship_type_text_size"
+        android:background="#bbbbbb" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/related_words_by_type"
+        android:layout_below="@id/relationship_type"
+        android:dividerHeight="@dimen/list_view_divider_height"
+        android:clickable="false"
+        android:footerDividersEnabled="false"/>
 
 </RelativeLayout>
