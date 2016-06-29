@@ -2,6 +2,7 @@ package com.example.jovica.wdictionary.helpers;
 
 import android.util.Log;
 
+import com.example.jovica.wdictionary.model.AudioResult;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordResult;
@@ -175,6 +176,46 @@ public class DictionaryAPI {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("DICTIONARYAPI", "FAILURE");
+                result.setResultStatus(ResultStatus.ServerError);
+            }
+        });
+
+        return result;
+
+    }
+
+    public static AudioResult getAudio(String word) {
+        String url = "word.json/" + word + "/audio";
+        RequestParams params = new RequestParams();
+        params.put("limit", 1);
+
+        final AudioResult result = new AudioResult();
+        result.setWord(word);
+
+        get(url, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+                if (response.length() == 1) {
+                    try {
+                        JSONObject obj = (JSONObject) response.get(0);
+                        String fileUrl = obj.getString("fileUrl");
+                        result.setFileUrl(fileUrl);
+                    } catch (JSONException e) {
+                        result.setResultStatus(ResultStatus.BadData);
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                result.setResultStatus(ResultStatus.ServerError);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 result.setResultStatus(ResultStatus.ServerError);
             }
         });

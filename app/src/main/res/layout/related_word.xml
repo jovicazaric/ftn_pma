@@ -39,7 +39,7 @@
             android:tint="@color/related_word_icons"
             android:id="@+id/speaker"
             android:src="@drawable/ic_speaker"
-            />
+            android:onClick="onSpeakerClick"/>
 
     </LinearLayout>
 

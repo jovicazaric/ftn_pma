@@ -21,7 +21,9 @@
     <string name="toolbar_related_words_for">Related words for:</string>
     <string name="progress_dialog_title">Please wait</string>
     <string name="definitions_search_progress_dialog_content">Getting definitions.</string>
+    <string name="related_words_progress_dialog_content_audio">Getting audio.</string>
     <string name="definitions_not_found">Definitions not found for typed word. Check if the word is typed correctly.</string>
+    <string name="audio_not_found">Audio not found for selected word.</string>
     <string name="server_error">Error happened while requesting data from server. Please try again.</string>
     <string name="random_word_search_progress_dialog_content">Getting random word.</string>
     <string name="related_words_search_progress_dialog_content">Getting related words.</string>
