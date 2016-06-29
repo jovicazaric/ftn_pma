@@ -61,7 +61,7 @@
         <item>related-word</item>
         <item>rhyme</item>
         <item>form</item>
-        <item>etymologically-related-word</item>
+        <item>etymologically-related-term</item>
         <item>hypernym</item>
         <item>hyponym></item>
         <item>inflected-word</item>
@@ -80,7 +80,7 @@
         <item>Related word</item>
         <item>Rhyme</item>
         <item>Form</item>
-        <item>Etymologically related word</item>
+        <item>Etymologically related term</item>
         <item>Hypernym</item>
         <item>Hyponym</item>
         <item>Inflacted word</item>

@@ -75,6 +75,10 @@ public class RelatedWordsTypesAdapter extends ArrayAdapter<RelationshipTypeResul
         if (value.equals("")) {
             value = relationshipTypeKey;
         }
+
+        if (value.equals("unknown")) {
+            value = "Unknown";
+        }
         return value;
     }
 }

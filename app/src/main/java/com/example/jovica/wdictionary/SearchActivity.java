@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.jovica.wdictionary.helpers.DictionaryAPI;
+import com.example.jovica.wdictionary.helpers.UI;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordResult;
@@ -145,7 +145,7 @@ public class SearchActivity extends FragmentActivity {
 
         if (wordForSearchEditText.getText().toString().equals("")) {
             String errorMessage = getResources().getString(R.string.search_word_required);
-            showToastMessage(errorMessage);
+            UI.showToastMessage(SearchActivity.this, errorMessage);
             return false;
         }
 
@@ -181,9 +181,9 @@ public class SearchActivity extends FragmentActivity {
                 intent.putExtra("definitions", result);
                 startActivity(intent);
             } else if (result.getResultStatus() == ResultStatus.Ok && result.getDefinitions().size() == 0) {
-                showToastMessage(getResources().getString(R.string.definitions_not_found));
+                UI.showToastMessage(SearchActivity.this, getResources().getString(R.string.definitions_not_found));
             } else if (result.getResultStatus() == ResultStatus.ServerError || result.getResultStatus() == ResultStatus.BadData) {
-                showToastMessage(getResources().getString(R.string.server_error));
+                UI.showToastMessage(SearchActivity.this, getResources().getString(R.string.server_error));
             }
         }
     }
@@ -215,7 +215,7 @@ public class SearchActivity extends FragmentActivity {
                 DefinitionsSearch definitionsSearch = makeDefinitionsSearch(randomWordSearch, result);
                 new GetDefinitions().execute(definitionsSearch);
             } else {
-                showToastMessage(getResources().getString(R.string.server_error));
+                UI.showToastMessage(SearchActivity.this, getResources().getString(R.string.server_error));
             }
         }
     }
@@ -249,15 +249,11 @@ public class SearchActivity extends FragmentActivity {
                 startActivity(intent);
 
             } else if (result.getResultStatus() == ResultStatus.Ok && result.getRelationshipTypes().size() == 0) {
-                showToastMessage(getResources().getString(R.string.related_words_not_found));
+                UI.showToastMessage(SearchActivity.this, getResources().getString(R.string.related_words_not_found));
             } else {
-                showToastMessage(getResources().getString(R.string.server_error));
+                UI.showToastMessage(SearchActivity.this,  getResources().getString(R.string.server_error));
             }
         }
-    }
-
-    private void showToastMessage(String message) {
-        Toast.makeText(SearchActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
     private DefinitionsSearch makeDefinitionsSearch(RandomWordSearch randomWordSearch, RandomWordResult randomWordResult) {
