@@ -1,10 +1,12 @@
 package com.example.jovica.wdictionary.helpers;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.jovica.wdictionary.model.AudioResult;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
+import com.example.jovica.wdictionary.model.DownloadAudioResult;
 import com.example.jovica.wdictionary.model.RandomWordResult;
 import com.example.jovica.wdictionary.model.RandomWordSearch;
 import com.example.jovica.wdictionary.model.RelatedWordsResult;
@@ -23,6 +25,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -222,5 +231,63 @@ public class DictionaryAPI {
 
         return result;
 
+    }
+
+    public static DownloadAudioResult downloadAudio(AudioResult param, Context context) {
+
+        InputStream input = null;
+        OutputStream output = null;
+        HttpURLConnection connection = null;
+
+        DownloadAudioResult result = new DownloadAudioResult();
+
+        try {
+            URL url = new URL(param.getFileUrl());
+            connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                result.setResultStatus(ResultStatus.ServerError);
+
+                if (connection != null)
+                    connection.disconnect();
+                return result;
+            }
+
+            input = connection.getInputStream();
+
+            if (context.getFilesDir() == null) {
+                result.setResultStatus(ResultStatus.ServerError);
+            } else {
+                File file = new File(context.getFilesDir(), param.getWord() + ".mp3");
+                file.createNewFile();
+                file.setReadable(true, false);
+                result.setFile(file);
+                output = new FileOutputStream(file);
+
+                byte data[] = new byte[4096];
+                int count;
+                while ((count = input.read(data)) != -1) {
+                    output.write(data, 0, count);
+                }
+            }
+
+        } catch (Exception e) {
+            result.setResultStatus(ResultStatus.ServerError);
+
+        } finally {
+            try {
+                if (output != null)
+                    output.close();
+                if (input != null)
+                    input.close();
+            } catch (IOException ignored) {
+            }
+
+            if (connection != null)
+                connection.disconnect();
+        }
+
+        return result;
     }
 }

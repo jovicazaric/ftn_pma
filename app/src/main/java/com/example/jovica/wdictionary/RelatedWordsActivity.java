@@ -18,16 +18,11 @@ import com.example.jovica.wdictionary.helpers.UI;
 import com.example.jovica.wdictionary.model.AudioResult;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
+import com.example.jovica.wdictionary.model.DownloadAudioResult;
 import com.example.jovica.wdictionary.model.RelatedWordsResult;
 import com.example.jovica.wdictionary.model.ResultStatus;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Created by Jovica on 28-Jun-16.
@@ -51,8 +46,19 @@ public class RelatedWordsActivity extends Activity {
         ListView relatedWordsTypes = (ListView) findViewById(R.id.related_words_types);
         RelatedWordsTypesAdapter relatedWordsTypesAdapter = new RelatedWordsTypesAdapter(RelatedWordsActivity.this, R.layout.relationship_type_item, relatedWordsResult.getRelationshipTypes());
         relatedWordsTypes.setAdapter(relatedWordsTypesAdapter);
+    }
 
-        Log.d("RELATEDWORDSACTIVITY", "from related words activity");
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Log.d("RWS", "Destroying");
+        if (getFilesDir() != null) {
+            for (File f : getFilesDir().listFiles()) {
+                Log.d("RWS DESTROYING", f.getAbsolutePath());
+                f.delete();
+            }
+        }
     }
 
     @Override
@@ -126,12 +132,8 @@ public class RelatedWordsActivity extends Activity {
 
 
             if (result.getResultStatus() == ResultStatus.Ok && !result.getFileUrl().equals("")) {
-
                 Log.d("RELATEDWORDACTIVITY", result.toString());
-                new DownloadAudio().execute(result.getFileUrl(), result.getWord());
-                /*Intent intent = new Intent(RelatedWordsActivity.this, DefinitionsActivity.class);
-                intent.putExtra("definitions", result);
-                startActivity(intent);*/
+                new DownloadAudio().execute(result);
             } else if (result.getResultStatus() == ResultStatus.Ok && result.getFileUrl().equals("")) {
                 progressDialog.dismiss();
                 UI.showToastMessage(RelatedWordsActivity.this, getResources().getString(R.string.audio_not_found));
@@ -142,69 +144,29 @@ public class RelatedWordsActivity extends Activity {
         }
     }
 
-    private class DownloadAudio extends AsyncTask<String, Void, String> {
+    private class DownloadAudio extends AsyncTask<AudioResult, Void, DownloadAudioResult> {
 
         @Override
         protected  void onPreExecute() {
         }
 
         @Override
-        protected String doInBackground(String... params) {
-            String fileUrl = params[0];
-            String word = params[1];
-
-            InputStream input = null;
-            OutputStream output = null;
-            HttpURLConnection connection = null;
-
-            try {
-                URL url = new URL(fileUrl);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                // expect HTTP 200 OK, so we don't mistakenly save error report
-                // instead of the file
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "";
-                }
-
-                // download the file
-                input = connection.getInputStream();
-                output = new FileOutputStream("/storage/emulated/0/Temp/" + word + ".mp3" );
-
-                byte data[] = new byte[4096];
-                int count;
-                while ((count = input.read(data)) != -1) {
-                    output.write(data, 0, count);
-                }
-            } catch (Exception e) {
-                return e.toString();
-            } finally {
-                try {
-                    if (output != null)
-                        output.close();
-                    if (input != null)
-                        input.close();
-                } catch (IOException ignored) {
-                }
-
-                if (connection != null)
-                    connection.disconnect();
-            }
-            return "/storage/emulated/0/Temp/" + word + ".mp3";
+        protected DownloadAudioResult doInBackground(AudioResult... params) {
+            AudioResult param = params[0];
+            DownloadAudioResult result = DictionaryAPI.downloadAudio(param, RelatedWordsActivity.this);
+            return result;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(DownloadAudioResult result) {
             progressDialog.dismiss();
 
-            if (result.equals("")) {
-                UI.showToastMessage(RelatedWordsActivity.this, getResources().getString(R.string.audio_not_found));
+            if (result.getResultStatus() == ResultStatus.ServerError) {
+                UI.showToastMessage(RelatedWordsActivity.this, getResources().getString(R.string.server_error));
             } else {
                 Intent intent = new Intent();
                 intent.setAction(android.content.Intent.ACTION_VIEW);
-                File file = new File(result);
-                intent.setDataAndType(Uri.fromFile(file), "audio/*");
+                intent.setDataAndType(Uri.fromFile(result.getFile()), "audio/*");
                 startActivity(intent);
             }
         }
