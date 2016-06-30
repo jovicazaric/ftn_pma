@@ -74,8 +74,9 @@ public class DefinitionsActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
-                return true;
+                return UI.goBack(this);
+            case R.id.exit:
+                return UI.exitApp(this);
             default:
                 return super.onOptionsItemSelected(item);
         }

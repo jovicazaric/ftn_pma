@@ -2,6 +2,7 @@ package com.example.jovica.wdictionary.helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -21,4 +22,19 @@ public class UI {
     public static void showToastMessage(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
+
+    public static boolean goBack(Activity activity) {
+        activity.finish();
+        return true;
+    }
+
+    public static boolean exitApp(Activity activity) {
+        Utils.emptyAudioFolder(activity);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+        return true;
+    }
+
 }

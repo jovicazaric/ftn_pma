@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -16,7 +17,6 @@ import android.widget.Toolbar;
 
 import com.example.jovica.wdictionary.helpers.DictionaryAPI;
 import com.example.jovica.wdictionary.helpers.UI;
-import com.example.jovica.wdictionary.helpers.Utils;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordResult;
@@ -58,6 +58,17 @@ public class SearchActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return UI.goBack(this);
+            case R.id.exit:
+                return UI.exitApp(this);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onSearchButtonClicked(View view) {
