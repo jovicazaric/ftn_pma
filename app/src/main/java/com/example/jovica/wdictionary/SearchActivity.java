@@ -16,6 +16,7 @@ import android.widget.Toolbar;
 
 import com.example.jovica.wdictionary.helpers.DictionaryAPI;
 import com.example.jovica.wdictionary.helpers.UI;
+import com.example.jovica.wdictionary.helpers.Utils;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordResult;
@@ -33,6 +34,7 @@ public class SearchActivity extends FragmentActivity {
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
     private EditText wordForSearchEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

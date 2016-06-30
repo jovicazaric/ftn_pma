@@ -15,14 +15,13 @@ import android.widget.Toolbar;
 import com.example.jovica.wdictionary.adapters.RelatedWordsTypesAdapter;
 import com.example.jovica.wdictionary.helpers.DictionaryAPI;
 import com.example.jovica.wdictionary.helpers.UI;
+import com.example.jovica.wdictionary.helpers.Utils;
 import com.example.jovica.wdictionary.model.AudioResult;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.DownloadAudioResult;
 import com.example.jovica.wdictionary.model.RelatedWordsResult;
 import com.example.jovica.wdictionary.model.ResultStatus;
-
-import java.io.File;
 
 /**
  * Created by Jovica on 28-Jun-16.
@@ -51,14 +50,7 @@ public class RelatedWordsActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        Log.d("RWS", "Destroying");
-        if (getFilesDir() != null) {
-            for (File f : getFilesDir().listFiles()) {
-                Log.d("RWS DESTROYING", f.getAbsolutePath());
-                f.delete();
-            }
-        }
+        Utils.emptyAudioFolder(RelatedWordsActivity.this);
     }
 
     @Override
