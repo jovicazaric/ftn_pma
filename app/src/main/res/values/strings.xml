@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">WDictionary</string>
+    <string name="loading">Loading</string>
     <string name="enter_word">Enter word...</string>
     <string name="definitions">Definitions</string>
     <string name="related_words">Related words</string>
@@ -97,4 +98,8 @@
     <string name="more_than_max">&gt;15</string>
     <string name="search_word_required">Please enter word for search.</string>
     <integer name="related_word_height">220</integer>
+    <string name="app_version">Version 0.1</string>
+    <string name="app_author">By Jovica Zaric</string>
+    <integer name="loading_simulator_interval">300</integer>
+    <integer name="loading_simulator_iteration">9</integer>
 </resources>

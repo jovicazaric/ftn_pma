@@ -8,4 +8,7 @@
     <dimen name="list_view_margin_left_right">10dp</dimen>
     <dimen name="related_word_text_size">15dp</dimen>
     <dimen name="relationship_type_text_size">20dp</dimen>
+    <dimen name="splash_screen_app_name">50dp</dimen>
+    <dimen name="splash_screen_loading">20dp</dimen>
+    <dimen name="splash_screen_dots">50dp</dimen>
 </resources>
