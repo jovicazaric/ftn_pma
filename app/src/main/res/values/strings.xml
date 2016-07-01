@@ -18,8 +18,8 @@
     <string name="menu_help">Help</string>
     <string name="menu_about">About</string>
     <string name="menu_exit">Exit</string>
-    <string name="toolbar_definitions_for">Definitions for:</string>
-    <string name="toolbar_related_words_for">Related words for:</string>
+    <string name="toolbar_definitions_for">Definitions:</string>
+    <string name="toolbar_related_words_for">Related words:</string>
     <string name="progress_dialog_title">Please wait</string>
     <string name="definitions_search_progress_dialog_content">Getting definitions.</string>
     <string name="related_words_progress_dialog_content_audio">Getting audio.</string>
@@ -105,4 +105,5 @@
     <integer name="loading_simulator_iteration">9</integer>
     <string name="visit_our_site">Visit our site</string>
     <string name="about_suggestions">If you have any questions or suggestions, send us an email</string>
+    <string name="question_suggestion_for_wdictionary">Question or suggestion for WDictionary</string>
 </resources>

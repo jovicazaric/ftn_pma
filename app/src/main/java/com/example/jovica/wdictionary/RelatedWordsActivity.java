@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toolbar;
 
@@ -46,6 +47,17 @@ public class RelatedWordsActivity extends Activity {
         ListView relatedWordsTypes = (ListView) findViewById(R.id.related_words_types);
         RelatedWordsTypesAdapter relatedWordsTypesAdapter = new RelatedWordsTypesAdapter(RelatedWordsActivity.this, R.layout.relationship_type_item, relatedWordsResult.getRelationshipTypes());
         relatedWordsTypes.setAdapter(relatedWordsTypesAdapter);
+
+        ImageView speaker = (ImageView) toolbar.findViewById(R.id.speaker);
+
+        speaker.setVisibility(View.VISIBLE);
+        speaker.setTag(relatedWordsResult.getWord());
+        speaker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSpeakerClick(v);
+            }
+        });
     }
 
     @Override
@@ -96,7 +108,7 @@ public class RelatedWordsActivity extends Activity {
         @Override
         protected DefinitionsResult doInBackground(DefinitionsSearch... params) {
             DefinitionsSearch search = params[0];
-            DefinitionsResult result = DictionaryAPI.getDefinitions(search);
+            DefinitionsResult result = DictionaryAPI.getDefinitions(search, RelatedWordsActivity.this);
             return result;
         }
 
@@ -127,7 +139,7 @@ public class RelatedWordsActivity extends Activity {
         @Override
         protected AudioResult doInBackground(String... params) {
             String word = params[0];
-            AudioResult result = DictionaryAPI.getAudio(word);
+            AudioResult result = DictionaryAPI.getAudio(word, RelatedWordsActivity.this);
             return result;
         }
 

@@ -101,7 +101,7 @@ public class DefinitionsActivity extends Activity {
         @Override
         protected AudioResult doInBackground(String... params) {
             String word = params[0];
-            AudioResult result = DictionaryAPI.getAudio(word);
+            AudioResult result = DictionaryAPI.getAudio(word, DefinitionsActivity.this);
             return result;
         }
 

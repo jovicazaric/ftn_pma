@@ -180,7 +180,7 @@ public class SearchActivity extends FragmentActivity {
         @Override
         protected DefinitionsResult doInBackground(DefinitionsSearch... params) {
             DefinitionsSearch search = params[0];
-            DefinitionsResult result = DictionaryAPI.getDefinitions(search);
+            DefinitionsResult result = DictionaryAPI.getDefinitions(search, SearchActivity.this);
             return result;
         }
 
@@ -219,7 +219,7 @@ public class SearchActivity extends FragmentActivity {
         protected RandomWordResult doInBackground(RandomWordSearch... params) {
             RandomWordSearch search = params[0];
             randomWordSearch = search;
-            RandomWordResult result = DictionaryAPI.getRandomWord(search);
+            RandomWordResult result = DictionaryAPI.getRandomWord(search, SearchActivity.this);
             return result;
         }
 
@@ -248,7 +248,7 @@ public class SearchActivity extends FragmentActivity {
         @Override
         protected RelatedWordsResult doInBackground(RelatedWordsSearch... params) {
             RelatedWordsSearch search = params[0];
-            RelatedWordsResult result = DictionaryAPI.getRelatedWords(search);
+            RelatedWordsResult result = DictionaryAPI.getRelatedWords(search, SearchActivity.this);
             return result;
         }
 

@@ -40,20 +40,15 @@ import cz.msebera.android.httpclient.Header;
 
 public class DictionaryAPI {
 
-    public static final String api_key = "f7a0b965ab8d6d61d700608bb8202da8a818e42379cf27cc4";
-    private static final String BASE_URL = "http://api.wordnik.com:80/v4/";
-
     private static SyncHttpClient client = new SyncHttpClient();
 
-    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        params.put("api_key", api_key);
-        client.get(getAbsoluteUrl(url), params, responseHandler);
-    }
-    private static String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl;
+    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler, Context context) {
+        params.put("api_key", Utils.getProperty("api_key", context));
+        String absoluteUrl = Utils.getProperty("api_base_url", context) + url;
+        client.get(absoluteUrl, params, responseHandler);
     }
 
-    public static DefinitionsResult getDefinitions(DefinitionsSearch definitionsSearch) {
+    public static DefinitionsResult getDefinitions(DefinitionsSearch definitionsSearch, Context context) {
         String url = "word.json/" + definitionsSearch.getWord() + "/definitions";
         RequestParams params = new RequestParams();
         params.put("limit", definitionsSearch.getWordLimit());
@@ -88,7 +83,7 @@ public class DictionaryAPI {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 result.setResultStatus(ResultStatus.ServerError);
             }
-        });
+        }, context);
 
         if (result.getResultStatus().equals(ResultStatus.Ok)) {
             result.setDefinitions(definitions);
@@ -97,7 +92,7 @@ public class DictionaryAPI {
         return result;
     }
 
-    public static RandomWordResult getRandomWord(RandomWordSearch randomWordSearch) {
+    public static RandomWordResult getRandomWord(RandomWordSearch randomWordSearch, Context context) {
         String url = "words.json/randomWord";
         RequestParams params = new RequestParams();
 
@@ -136,12 +131,12 @@ public class DictionaryAPI {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 result.setResultStatus(ResultStatus.ServerError);
             }
-        });
+        }, context);
 
         return result;
     }
 
-    public static RelatedWordsResult getRelatedWords(RelatedWordsSearch relatedWordsSearch) {
+    public static RelatedWordsResult getRelatedWords(RelatedWordsSearch relatedWordsSearch, Context context) {
         String url = "word.json/" + relatedWordsSearch.getWord() + "/relatedWords";
         RequestParams params = new RequestParams();
 
@@ -187,13 +182,13 @@ public class DictionaryAPI {
                 Log.d("DICTIONARYAPI", "FAILURE");
                 result.setResultStatus(ResultStatus.ServerError);
             }
-        });
+        }, context);
 
         return result;
 
     }
 
-    public static AudioResult getAudio(String word) {
+    public static AudioResult getAudio(String word, Context context) {
         String url = "word.json/" + word + "/audio";
         RequestParams params = new RequestParams();
         params.put("limit", 1);
@@ -227,7 +222,7 @@ public class DictionaryAPI {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 result.setResultStatus(ResultStatus.ServerError);
             }
-        });
+        }, context);
 
         return result;
 

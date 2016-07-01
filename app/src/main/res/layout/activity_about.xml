@@ -41,7 +41,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:layout_below="@id/app"
-        android:id="@+id/site">
+        android:id="@+id/site"
+        android:onClick="visitWebSite">
 
         <LinearLayout
             android:layout_width="200dp"
@@ -94,7 +95,8 @@
             android:tint="@color/related_word_icons"
             android:layout_below="@id/about_suggestions"
             android:id="@+id/email"
-            android:src="@drawable/ic_email"/>
+            android:src="@drawable/ic_email"
+            android:onClick="sendEmail"/>
 
     </RelativeLayout>
 
