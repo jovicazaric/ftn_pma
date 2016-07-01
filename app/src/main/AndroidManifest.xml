@@ -18,6 +18,9 @@
         <activity android:name=".RelatedWordsActivity">
         </activity>
 
+        <activity android:name=".AboutActivity">
+        </activity>
+
         <activity android:name=".SplashScreenActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -67,6 +67,10 @@ public class RelatedWordsActivity extends Activity {
                 return UI.goBack(this);
             case R.id.exit:
                 return UI.exitApp(this);
+            case R.id.about:
+                Intent intent = new Intent(RelatedWordsActivity.this, AboutActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

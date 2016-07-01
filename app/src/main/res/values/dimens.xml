@@ -11,4 +11,6 @@
     <dimen name="splash_screen_app_name">50dp</dimen>
     <dimen name="splash_screen_loading">20dp</dimen>
     <dimen name="splash_screen_dots">50dp</dimen>
+    <dimen name="visit_our_site">25dp</dimen>
+    <dimen name="about_suggestions">15dp</dimen>
 </resources>

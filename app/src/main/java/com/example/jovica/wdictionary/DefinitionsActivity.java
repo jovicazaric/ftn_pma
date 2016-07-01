@@ -77,6 +77,10 @@ public class DefinitionsActivity extends Activity {
                 return UI.goBack(this);
             case R.id.exit:
                 return UI.exitApp(this);
+            case R.id.about:
+                Intent intent = new Intent(DefinitionsActivity.this, AboutActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

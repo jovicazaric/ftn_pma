@@ -36,5 +36,4 @@ public class UI {
         activity.startActivity(intent);
         return true;
     }
-
 }

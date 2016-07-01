@@ -100,6 +100,9 @@
     <integer name="related_word_height">220</integer>
     <string name="app_version">Version 0.1</string>
     <string name="app_author">By Jovica Zaric</string>
+    <string name="all_rights_reserved_about">(C) Jovica Zaric 2016</string>
     <integer name="loading_simulator_interval">300</integer>
     <integer name="loading_simulator_iteration">9</integer>
+    <string name="visit_our_site">Visit our site</string>
+    <string name="about_suggestions">If you have any questions or suggestions, send us an email</string>
 </resources>
