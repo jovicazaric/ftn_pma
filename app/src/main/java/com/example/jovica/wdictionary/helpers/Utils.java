@@ -2,6 +2,8 @@ package com.example.jovica.wdictionary.helpers;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.io.File;
@@ -39,5 +41,11 @@ public class Utils {
         }
 
         return value;
+    }
+
+    public static boolean hasInternetAccess(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

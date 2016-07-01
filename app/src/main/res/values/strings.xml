@@ -106,4 +106,5 @@
     <string name="visit_our_site">Visit our site</string>
     <string name="about_suggestions">If you have any questions or suggestions, send us an email</string>
     <string name="question_suggestion_for_wdictionary">Question or suggestion for WDictionary</string>
+    <string name="no_internet_acces">No internet access. Please turn on Wi-Fi or mobile data.</string>
 </resources>

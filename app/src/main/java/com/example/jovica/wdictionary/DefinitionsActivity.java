@@ -87,6 +87,12 @@ public class DefinitionsActivity extends Activity {
     }
 
     public void onSpeakerClicked(View v) {
+
+        if (!Utils.hasInternetAccess(DefinitionsActivity.this)) {
+            UI.showToastMessage(DefinitionsActivity.this, getResources().getString(R.string.no_internet_acces));
+            return;
+        }
+
         new GetAudio().execute((String)v.getTag());
     }
 

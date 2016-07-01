@@ -17,6 +17,7 @@ import android.widget.Toolbar;
 
 import com.example.jovica.wdictionary.helpers.DictionaryAPI;
 import com.example.jovica.wdictionary.helpers.UI;
+import com.example.jovica.wdictionary.helpers.Utils;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
 import com.example.jovica.wdictionary.model.DefinitionsSearch;
 import com.example.jovica.wdictionary.model.RandomWordResult;
@@ -76,6 +77,12 @@ public class SearchActivity extends FragmentActivity {
     }
 
     public void onSearchButtonClicked(View view) {
+
+        if (!Utils.hasInternetAccess(SearchActivity.this)) {
+            UI.showToastMessage(SearchActivity.this, getResources().getString(R.string.no_internet_acces));
+            return;
+        }
+
         Search search = getSearch();
         if (search != null) {
             if (search instanceof DefinitionsSearch) {

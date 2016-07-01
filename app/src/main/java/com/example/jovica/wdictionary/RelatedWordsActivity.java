@@ -89,11 +89,21 @@ public class RelatedWordsActivity extends Activity {
     }
 
     public void onSearchClick(View v) {
+
+        if (!Utils.hasInternetAccess(RelatedWordsActivity.this)) {
+            UI.showToastMessage(RelatedWordsActivity.this, getResources().getString(R.string.no_internet_acces));
+            return;
+        }
         DefinitionsSearch definitionsSearch = makeDefinitionsSearch((String)v.getTag());
         new GetDefinitions().execute(definitionsSearch);
     }
 
     public void onSpeakerClick(View v) {
+
+        if (!Utils.hasInternetAccess(RelatedWordsActivity.this)) {
+            UI.showToastMessage(RelatedWordsActivity.this, getResources().getString(R.string.no_internet_acces));
+            return;
+        }
         new GetAudio().execute((String)v.getTag());
     }
 
