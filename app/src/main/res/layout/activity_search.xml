@@ -31,7 +31,7 @@
                 android:hint="@string/enter_word"
                 android:text="house"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/et_word_for_search"
@@ -42,6 +42,7 @@
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:id="@+id/rg_search_types">
 
                     <RadioButton
@@ -69,15 +70,15 @@
                 </RadioGroup>
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/rg_search_types"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="70dp"
                     android:text="@string/search"
-                    android:onClick="onSearchButtonClicked"/>
+                    android:drawableLeft="@drawable/ic_search"
+                    android:drawableTint="@color/related_word_icons"
+                    android:onClick="onSearchButtonClicked"
+                    android:layout_gravity="right|center" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

@@ -107,4 +107,9 @@
     <string name="about_suggestions">If you have any questions or suggestions, send us an email</string>
     <string name="question_suggestion_for_wdictionary">Question or suggestion for WDictionary</string>
     <string name="no_internet_acces">No internet access. Please turn on Wi-Fi or mobile data.</string>
+    <string name="enable_internet">Please enable internet access:</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="data">Data</string>
+    <string name="if_no_internet">With no internet access the application is not working properly.</string>
+    <string name="proceed_anyway">Proceed anyway</string>
 </resources>

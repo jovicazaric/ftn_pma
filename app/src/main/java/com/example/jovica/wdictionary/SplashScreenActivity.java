@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.jovica.wdictionary.helpers.Utils;
+
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,8 +64,15 @@ public class SplashScreenActivity extends Activity {
 
     private void stop() {
         timer.cancel();
-        Intent intent = new Intent(SplashScreenActivity.this, SearchActivity.class);
-        startActivity(intent);
+
+        if (Utils.hasInternetAccess(SplashScreenActivity.this)) {
+            Intent intent = new Intent(SplashScreenActivity.this, SearchActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SplashScreenActivity.this, InternetActivity.class);
+            startActivity(intent);
+        }
+
     }
     private void addDot() {
         runOnUiThread(new Runnable() {
