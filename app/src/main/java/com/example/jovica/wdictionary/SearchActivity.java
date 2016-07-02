@@ -41,18 +41,50 @@ public class SearchActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setActionBar(toolbar);
+        getActionBar().setTitle(getResources().getString(R.string.app_name));
+
+        wordForSearchEditText = (EditText) findViewById(R.id.et_word_for_search);
+
         if (findViewById(R.id.search_options_fragment_container) != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             DefinitionsFragment definitionsFragment = new DefinitionsFragment();
             transaction.replace(R.id.search_options_fragment_container, definitionsFragment);
             transaction.commit();
         }
+    }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setActionBar(toolbar);
-        getActionBar().setTitle(getResources().getString(R.string.app_name));
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        wordForSearchEditText = (EditText) findViewById(R.id.et_word_for_search);
+        RadioGroup searchTypes = (RadioGroup) findViewById(R.id.rg_search_types);
+
+        if (searchTypes != null && findViewById(R.id.search_options_fragment_container) != null) {
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            switch (searchTypes.getCheckedRadioButtonId()) {
+                case R.id.rb_definitions:
+                    DefinitionsFragment definitionsFragment = new DefinitionsFragment();
+                    transaction.replace(R.id.search_options_fragment_container, definitionsFragment);
+                    wordForSearchEditText.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.rb_related_words:
+                    RelatedWordsFragment relatedWordsFragment = new RelatedWordsFragment();
+                    transaction.replace(R.id.search_options_fragment_container, relatedWordsFragment);
+                    wordForSearchEditText.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.rb_random_word:
+                    RandomWordFragment randomWordFragment = new RandomWordFragment();
+                    transaction.replace(R.id.search_options_fragment_container, randomWordFragment);
+                    wordForSearchEditText.setVisibility(View.INVISIBLE);
+                    break;
+            }
+
+            transaction.commit();
+        }
     }
 
     @Override
