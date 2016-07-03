@@ -41,18 +41,42 @@
     <string-array name="part_of_speech_keys">
         <item></item>
         <item>noun</item>
-        <item>verb</item>
         <item>adjective</item>
+        <item>verb</item>
         <item>adverb</item>
+        <item>pronoun</item>
+        <item>preposition</item>
         <item>abbreviation</item>
+        <item>article</item>
+        <item>auxiliary-verb</item>
+        <item>idiom</item>
+        <item>imperative</item>
+        <item>noun-plural</item>
+        <item>noun-posessive</item>
+        <item>past-participle</item>
+        <item>suffix</item>
+        <item>verb-intransitive</item>
+        <item>verb-transitive</item>
     </string-array>
     <string-array name="part_of_speech_values">
         <item>All</item>
         <item>Noun</item>
-        <item>Verb</item>
         <item>Adjective</item>
+        <item>Verb</item>
         <item>Adverb</item>
+        <item>Pronoun</item>
+        <item>Preposition</item>
         <item>Abbreviation</item>
+        <item>Article</item>
+        <item>Auxiliary verb</item>
+        <item>Idiom</item>
+        <item>Imperative</item>
+        <item>Plural noun</item>
+        <item>Posessive noun</item>
+        <item>Past participle</item>
+        <item>Suffix</item>
+        <item>Intransitive verb</item>
+        <item>Transitive verb</item>
     </string-array>
     <string-array name="relationship_type_keys">
         <item></item>

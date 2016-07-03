@@ -26,8 +26,7 @@ import com.example.jovica.wdictionary.model.ResultStatus;
  * Created by Jovica on 27-Jun-16.
  */
 public class DefinitionsActivity extends Activity {
-
-    private static final String activityName = "DEFINITIONS_ACTIVITY";
+    
     private Toolbar toolbar;
     private ProgressDialog progressDialog;
 

@@ -5,7 +5,6 @@ import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +17,8 @@ import java.util.Properties;
 public class Utils {
 
     public static void emptyAudioFolder(Context context) {
-        Log.d("RWS", "Destroying");
         if (context.getFilesDir() != null) {
             for (File f : context.getFilesDir().listFiles()) {
-                Log.d("RWS DESTROYING", f.getAbsolutePath());
                 f.delete();
             }
         }

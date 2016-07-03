@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,11 +25,8 @@ import com.example.jovica.wdictionary.model.RelatedWordsResult;
 import com.example.jovica.wdictionary.model.RelatedWordsSearch;
 import com.example.jovica.wdictionary.model.ResultStatus;
 import com.example.jovica.wdictionary.model.Search;
-import com.example.jovica.wdictionary.model.WordDefinition;
 
 public class SearchActivity extends FragmentActivity {
-
-    private static final String activityName = "SEARCH_ACTIVITY";
 
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
@@ -227,11 +223,6 @@ public class SearchActivity extends FragmentActivity {
         protected void onPostExecute(DefinitionsResult result) {
             progressDialog.dismiss();
 
-            Log.d(activityName, result.getResultStatus() + ", " + result.getDefinitions().size());
-            for (WordDefinition w : result.getDefinitions()) {
-                Log.d(activityName, w.toString());
-            }
-
             if (result.getResultStatus() == ResultStatus.Ok && result.getDefinitions().size() > 0) {
                 Intent intent = new Intent(SearchActivity.this, DefinitionsActivity.class);
                 intent.putExtra("definitions", result);
@@ -265,7 +256,6 @@ public class SearchActivity extends FragmentActivity {
         @Override
         protected void onPostExecute(RandomWordResult result) {
             progressDialog.dismiss();
-            Log.d(activityName, result.toString());
 
             if (result.getResultStatus() == ResultStatus.Ok) {
                 DefinitionsSearch definitionsSearch = makeDefinitionsSearch(randomWordSearch, result);
@@ -296,10 +286,6 @@ public class SearchActivity extends FragmentActivity {
             progressDialog.dismiss();
 
             if (result.getResultStatus() == ResultStatus.Ok && result.getRelationshipTypes().size() > 0) {
-
-                Log.d(activityName, result.toString());
-                Log.d(activityName, "OK");
-
                 Intent intent = new Intent(SearchActivity.this, RelatedWordsActivity.class);
                 intent.putExtra("relatedWords", result);
                 startActivity(intent);

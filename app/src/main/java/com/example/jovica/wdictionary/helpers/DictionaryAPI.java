@@ -1,7 +1,6 @@
 package com.example.jovica.wdictionary.helpers;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.jovica.wdictionary.model.AudioResult;
 import com.example.jovica.wdictionary.model.DefinitionsResult;
@@ -147,8 +146,6 @@ public class DictionaryAPI {
         params.put("limitPerRelationshipType", relatedWordsSearch.getLimitPerRelationshipType());
         params.put("useCanonical", relatedWordsSearch.getUseCanonical());
 
-        Log.d("DICTIONARYAPI", relatedWordsSearch.toString());
-
         final RelatedWordsResult result = new RelatedWordsResult();
         result.setWord(relatedWordsSearch.getWord());
 
@@ -161,7 +158,6 @@ public class DictionaryAPI {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = (JSONObject) response.get(i);
-                        Log.d("DICTAPI", obj.toString());
                         RelationshipTypeResult relationshipTypeResult = gson.fromJson(obj.toString(), RelationshipTypeResult.class);
                         result.addRelationshipType(relationshipTypeResult);
                     } catch (JSONException | JsonParseException e) {
@@ -173,13 +169,11 @@ public class DictionaryAPI {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DICTIONARYAPI", "FAILURE");
                 result.setResultStatus(ResultStatus.ServerError);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("DICTIONARYAPI", "FAILURE");
                 result.setResultStatus(ResultStatus.ServerError);
             }
         }, context);

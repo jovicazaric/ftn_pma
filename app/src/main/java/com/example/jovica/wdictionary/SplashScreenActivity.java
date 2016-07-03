@@ -3,7 +3,6 @@ package com.example.jovica.wdictionary;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.jovica.wdictionary.helpers.Utils;
@@ -34,7 +33,6 @@ public class SplashScreenActivity extends Activity {
 
         Random random = new Random();
         iterations = iterations + (Math.abs(random.nextInt()) % 11) - 5;
-        Log.d("SPLASH", iterations + "");
         timer = new Timer();
 
         timerTask = new TimerTask() {
